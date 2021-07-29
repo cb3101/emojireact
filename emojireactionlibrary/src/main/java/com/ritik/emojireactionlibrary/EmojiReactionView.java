@@ -154,19 +154,20 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             TypedAttribute typedAttribute = (TypedAttribute) attr;
 
             if (attr.getName().equals("emojis")) {
+                // to test with only one emoji
                 emojiId.add(typedAttribute.getResId());
-                numberOfEmojis = 1;
-                /*
-                final TypedArray resourceArray = context.getResources().obtainTypedArray(
-                        typedArray.getResourceId(R.styleable.EmojiReactionView_emojis, 0));
-                // Get emojis id from attribute and store it in arraylist
-                for (int j = 0; j < resourceArray.length(); j++) {
-                    emojiId.add(resourceArray.getResourceId(j, 0));
-                }
                 numberOfEmojis = emojiId.size();
-                resourceArray.recycle();
 
-                 */
+
+
+//                final TypedArray resourceArray = context.getResources().obtainTypedArray(
+//                        typedArray.getResourceId(R.styleable.EmojiReactionView_emojis, 0));
+//                // Get emojis id from attribute and store it in arraylist
+//                for (int j = 0; j < resourceArray.length(); j++) {
+//                    emojiId.add(resourceArray.getResourceId(j, 0));
+//                }
+//                numberOfEmojis = emojiId.size();
+//                resourceArray.recycle();
             }
             else if (attr.getName().equals("set_emoji")) {
                 clickedEmojiNumber = typedAttribute.getIntegerValue();
@@ -186,13 +187,13 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
                 if (typedAttribute.getType() == TypedAttribute.FLOAT_ATTR)
                     panelCentreGiven[0] = typedAttribute.getPixelValue(false);
                 else {
-                    //panelCentreGiven[0] = checkFraction(typedArray.getFraction(attr, -1, -1, -2));
+//                    panelCentreGiven[0] = checkFraction(typedArray.getFraction(attr, -1, -1, -2));
                 }
             } else if (attr.getName().equals("panel_center_Y")) {
                 if (typedAttribute.getType() == TypedAttribute.FLOAT_ATTR)
                     panelCentreGiven[1] = typedAttribute.getPixelValue(false);
                 else {
-                    // panelCentreGiven[1] = checkFraction(typedArray.getFraction(attr, -1, -1, -2));
+//                    panelCentreGiven[1] = checkFraction(typedArray.getFraction(attr, -1, -1, -2));
                 }
             } else if (attr.getName().equals("panel_radius")) {
                 panelRadiusGiven = typedAttribute.getPixelValue(false);
@@ -201,7 +202,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
                 panelEmojiSide = typedAttribute.getPixelValue(false);
 
             } else if (attr.getName().equals("emojis_rising_height")) {
-               // emojisRisingHeightGiven = checkFraction(typedArray.getFraction(attr, -1, -1, -2));
+//                emojisRisingHeightGiven = checkFraction(typedArray.getFraction(attr, -1, -1, -2));
             } else if (attr.getName().equals("emojis_rising_speed")) {
                 emojisRisingSpeed = typedAttribute.getPixelValue(false);
 
