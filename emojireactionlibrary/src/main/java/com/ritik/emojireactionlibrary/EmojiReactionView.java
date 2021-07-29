@@ -134,10 +134,12 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
 
     public EmojiReactionView(Context context, AttrSet attrs) throws NotExistException, WrongTypeException, IOException {
         this(context, attrs, 0);
+        System.out.println("CHIRAG : EmojiReactionView constructor context attrs");
     }
 
     public EmojiReactionView(Context context, AttrSet attrs, int defStyle) throws NotExistException, WrongTypeException, IOException {
         super(context, attrs, String.valueOf(defStyle));
+        System.out.println("CHIRAG : EmojiReactionView constructor context attrs defstyle");
         this.context = context;
         // extract data from attributes
         this.initBaseXMLAttrs(context, attrs);
@@ -145,13 +147,17 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
     }
 
     final void initBaseXMLAttrs(Context context, AttrSet attrSet) throws NotExistException, WrongTypeException, IOException {
+        System.out.println("CHIRAG : EmojiReactionView initBaseXMLAttrs");
+        System.out.println("CHIRAG : EmojiReactionView initBaseXMLAttrs attributes : " + attrSet.getLength());
 
         final int N = attrSet.getLength();
         for (int i = 0; i < N; ++i) {
             Optional<Attr> optionalAttr = attrSet.getAttr(i);
+
             if(!optionalAttr.isPresent()){continue;}
             Attr attr = optionalAttr.get();
             TypedAttribute typedAttribute = (TypedAttribute) attr;
+            System.out.println("CHIRAG : EmojiReactionView initBaseXMLAttrs attribute : " + i + " " + attr.getName());
 
             if (attr.getName().equals("emojis")) {
                 emojiId.add(typedAttribute.getResId());
@@ -217,6 +223,13 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
         emojiPixelMap = new PixelMap[numberOfEmojis];
 
     }
+
+
+
+
+
+
+
 
     private float checkFraction(float input) {
         // Check that percents entered is within [0% 100%]
@@ -350,21 +363,25 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
     }
 
     private void init() throws NotExistException, WrongTypeException, IOException {
+        System.out.println("CHIRAG EmojiReactionView init");
         addDrawTask(this);
         // The paint which dims the background on circular animation
         Color c = new Color(Color.argb(150, 185, 185, 185));
         clickedPaint.setColor(c);
+        System.out.println("CHIRAG EmojiReactionView init : " + clickedPaint.toString());
         // Get the Emoji to be displayed in PixelMap
         if (clickedEmojiNumber != -1) {
             emojiPixelMap[clickedEmojiNumber] = getPixelMapFromId(emojiId.get(clickedEmojiNumber), panelEmojiSide);
+            System.out.println("CHIRAG EmojiReactionView init : " + emojiPixelMap[clickedEmojiNumber].toString());
         }
 
         setup();
     }
 
     private void setup() throws NotExistException, WrongTypeException, IOException {
-
+        System.out.println("CHIRAG EmojiReactionView setup");
         if (emojiId == null) {
+            System.out.println("CHIRAG EmojiReactionView setup emoji null");
             return;
         }
         if (numberOfEmojis == 0) {
@@ -372,14 +389,18 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             panelAnimWorking = false;
             clickingAnimWorking = false;
             emojiRising = false;
+            System.out.println("CHIRAG EmojiReactionView setup emoji number 0");
             return;
         }
 
         if (getWidth() == 0 && getHeight() == 0) {
+            System.out.println("CHIRAG EmojiReactionView setup width =0 or height = 0");
             return;
         } else {
             smallerDimension = getHeight() > getWidth() ? getWidth() : getHeight();
+            System.out.println("CHIRAG EmojiReactionView setup " + smallerDimension);
         }
+        System.out.println("CHIRAG EmojiReactionView setup 2");
 
         // set emojisRisingHeight based on user data
         if (emojisRisingHeightGiven == -2) {
@@ -387,6 +408,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
         } else if (emojisRisingHeightGiven <= 0 && emojisRisingHeightGiven >= -1) {
             emojisRisingHeight = getHeight() - (int) (emojisRisingHeightGiven * getHeight());
         }
+        System.out.println("CHIRAG EmojiReactionView setup 2 ");
         setHomeRect();
         setPathPanel();
 
@@ -394,12 +416,15 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
     }
 
     private void setHomeRect() throws NotExistException, WrongTypeException, IOException {
+        System.out.println("CHIRAG EmojiReactionView setHomeRect 1 ");
         // Set the homeRect y coordinate based on user data
         if (homeCenterYGiven == -1) {
             homeCenter[1] = getHeight() - (int) (30 * densityFactor);
         } else {
             homeCenter[1] = (int) (getHeight() - homeCenterYGiven);
         }
+        System.out.println("CHIRAG EmojiReactionView setHomeRect 2 ");
+
 
         // Set the homePixelMap with the default PixelMap
         // use R.drawable.home to access or modify it
@@ -407,9 +432,11 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             homePixelMap = getPixelMapFromId(ResourceTable.Media_home, homeSide);
         // Set the home Rect
         homeRect = new Rect((homeCenter[0] - homeSide / 2), (homeCenter[1] - homeSide / 2), (homeCenter[0] + homeSide / 2), (homeCenter[1] + homeSide / 2));
+        System.out.println("CHIRAG EmojiReactionView setHomeRect 3 ");
     }
 
     private void setPathPanel() {
+        System.out.println("CHIRAG EmojiReactionView setPathPanel 1 ");
         // Set the coordinates for circular animation
         if (panelCentreGiven[0] == -2)
             panelCentre[0] = getWidth() / 2;
@@ -418,6 +445,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
         } else if (panelCentreGiven[0] >= 0) {
             panelCentre[0] = (int) (panelCentreGiven[0]);
         }
+        System.out.println("CHIRAG EmojiReactionView setPathPanel 2 ");
         if (panelCentreGiven[1] == -2)
             panelCentre[1] = getHeight() - panelEmojiSide / 2;
         else if (panelCentreGiven[1] >= -1 && panelCentreGiven[1] <= 0) {
@@ -425,6 +453,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
         } else if (panelCentreGiven[1] >= 0) {
             panelCentre[1] = getHeight() - (int) (panelCentreGiven[1]);
         }
+        System.out.println("CHIRAG EmojiReactionView setPathPanel 3 ");
         //TODO: need to look somewhat flatter
 
         // Set the radius of circular animation
@@ -433,6 +462,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
         } else {
             panelRadius = smallerDimension / 2 > panelRadiusGiven ? panelRadiusGiven : smallerDimension / 2;
         }
+        System.out.println("CHIRAG EmojiReactionView setPathPanel 4 ");
 
         clickedRadius = (int) (panelEmojiSide * 0.65);
         // angle between successive emojis
@@ -447,6 +477,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             emojiPath1.lineTo((float) (panelCentre[0] + panelRadius * Math.cos(i * angle + Math.PI)), (float) (panelCentre[1] + panelRadius * Math.sin(i * angle + Math.PI)));
             pms[i - 1] = new PathMeasure(emojiPath1, false);
         }
+        System.out.println("CHIRAG EmojiReactionView setPathPanel 5 ");
 
     }
     @Override
@@ -457,9 +488,9 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
 
     @Override
     public void onDraw(Component component, Canvas canvas) {
-        //super.onDraw(canvas);
-        if (homeEmojiVisible)
+        //super.onDraw(component, canvas);
 
+        if (homeEmojiVisible)
             // To make home emoji visible
             if (clickedEmojiNumber == -1){
                 PixelMapHolder pixelMapHolder = new PixelMapHolder(homePixelMap);
@@ -479,7 +510,9 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             for (int i = 0; i < numberOfEmojis; i++){
                 PixelMapHolder pixelMapHolder = new PixelMapHolder(emojiPixelMap[i]);
                 canvas.concat(emojiMatrix[i]);
-              //  canvas.drawPixelMapHolderRect(pixelMapHolder, emojiMatrix[i], null);
+                canvas.drawPixelMapHolderRect(pixelMapHolder,new RectFloat(homeRect), null);
+
+                //canvas.drawPixelMapHolderRect(pixelMapHolder,  emojiMatrix[i], null);
                 //canvas.drawBitmap(emojiBitmap[i], emojiMatrix[i], null);
             }
             try {
@@ -501,6 +534,8 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             }
             for (int i = 0; i < numberOfEmojis; i++) {
                 PixelMapHolder pixelMapHolder= new PixelMapHolder(emojiPixelMap[i]);
+                canvas.concat(emojiMatrix[i]);
+                canvas.drawPixelMapHolderRect(pixelMapHolder,new RectFloat(homeRect), null);
                 //canvas.drawBitmap(emojiBitmap[i], emojiMatrix[i], null);
             }
         }
