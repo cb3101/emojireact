@@ -152,6 +152,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
 
         final int N = attrSet.getLength();
         for (int i = 0; i < N; ++i) {
+            /*
             Optional<Attr> optionalAttr = attrSet.getAttr(i);
 
             if(!optionalAttr.isPresent()){continue;}
@@ -162,7 +163,7 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             if (attr.getName().equals("emojis")) {
                 emojiId.add(typedAttribute.getResId());
                 numberOfEmojis = 1;
-                /*
+
                 final TypedArray resourceArray = context.getResources().obtainTypedArray(
                         typedArray.getResourceId(R.styleable.EmojiReactionView_emojis, 0));
                 // Get emojis id from attribute and store it in arraylist
@@ -172,7 +173,8 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
                 numberOfEmojis = emojiId.size();
                 resourceArray.recycle();
 
-                 */
+
+
             }
             else if (attr.getName().equals("set_emoji")) {
                 clickedEmojiNumber = typedAttribute.getIntegerValue();
@@ -214,11 +216,13 @@ public class EmojiReactionView extends Image implements Component.DrawTask {
             } else if (attr.getName().equals("emojis_rising_number")) {
                 numberOfRisers = typedAttribute.getIntegerValue();
             }
+
+             */
         }
         if (clickedEmojiNumber >= numberOfEmojis || clickedEmojiNumber < -1) {
             throw new IllegalArgumentException("set_emoji can't be more than number of emojis!");
         }
-
+        emojiId.add(ResourceTable.Media_emoji1);
         numberOfEmojis = emojiId.size();
         emojiPixelMap = new PixelMap[numberOfEmojis];
 
